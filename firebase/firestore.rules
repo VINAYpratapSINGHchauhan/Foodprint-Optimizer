@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Allow reading surplus logs
+    match /surplusLogs/{docId} {
+      allow read: if true;      // anyone can view
+      allow write: if true;     // temporary for hackathon demo
+    }
+
+    // NGOs data
+    match /ngos/{docId} {
+      allow read: if true;
+      allow write: if true; 
+    }
+
+    // Impact stats
+    match /impact/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Block everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
